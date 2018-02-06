@@ -38,13 +38,23 @@ using namespace std;
 template<typename T>
 inline auto oddProduct(T n) -> enable_if_t<is_integral<T>::value, unsigned long long> {
 	if (n < 0) 
-		throw invalid_argument("oddProduct: negative value");
+		throw invalid_argument("oddProduct - negative value");
 	return n < T{ 2 } ? n : (n % T{ 2 }) ? oddProduct(n - T{ 2 }) * n : oddProduct(--n);
 }
 
 int main() 
 {
-	cout << "The product of the odd integers from 1 to 15 is " << oddProduct(15) << endl;
+	const int oddNumber{ 15 };
+
+	try
+	{
+		cout << "The product of the odd integers from 1 to " << oddNumber << " is " 
+			 << oddProduct(oddNumber) << endl;
+	}
+	catch (invalid_argument &invalidArgument)
+	{
+		cout << "Exception: " << invalidArgument.what() << "\n";
+	}
 
 	return 0;
 }
